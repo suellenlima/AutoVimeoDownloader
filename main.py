@@ -38,10 +38,19 @@ for line in open(args.url_list):
 
     init_segment = base64.b64decode(video['init_segment'])
     video_file.write(init_segment)
-
-    for segment in tqdm(video['segments']):
-        segment_url = video_base_url + segment['url']
-        resp = requests.get(segment_url, stream=True)
+    if init_segment:
+        for segment in tqdm(video['segments']):
+            segment_url = video_base_url + segment['url']
+            resp = requests.get(segment_url, stream=True)
+            if resp.status_code != 200:
+                print('not 200!')
+                print(resp)
+                print(segment_url)
+                break
+            for chunk in resp:
+                video_file.write(chunk)
+    else:
+        resp = requests.get(video_base_url, stream=True)
         if resp.status_code != 200:
             print('not 200!')
             print(resp)
