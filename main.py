@@ -38,6 +38,7 @@ for line in open(args.url_list):
 
     init_segment = base64.b64decode(video['init_segment'])
     video_file.write(init_segment)
+    
     if init_segment:
         for segment in tqdm(video['segments']):
             segment_url = video_base_url + segment['url']
@@ -79,9 +80,21 @@ for line in open(args.url_list):
 
     init_segment = base64.b64decode(audio['init_segment'])
     audio_file.write(init_segment)
-
-    for segment in tqdm(audio['segments']):
-        segment_url = audio_base_url + segment['url']
+    
+    if init_segment:
+        for segment in tqdm(audio['segments']):
+            segment_url = audio_base_url + segment['url']
+            segment_url = re.sub(r'/[a-zA-Z0-9_-]*/\.\./',r'/',segment_url.rstrip())
+            resp = requests.get(segment_url, stream=True)
+            if resp.status_code != 200:
+                print('not 200!')
+                print(resp)
+                print(segment_url)
+                break
+            for chunk in resp:
+                audio_file.write(chunk)
+    else:
+        segment_url = audio_base_url
         segment_url = re.sub(r'/[a-zA-Z0-9_-]*/\.\./',r'/',segment_url.rstrip())
         resp = requests.get(segment_url, stream=True)
         if resp.status_code != 200:
