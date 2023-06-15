@@ -49,7 +49,7 @@ Then run the script, providing the name of this file with names and URLs in VS C
 
 Example:
 ```bash
-C:/Python312/python.exe "c:/AutoVimeoDownloader/vimeo-audio-and-video.py" -i names_urls.txt
+C:/Python312/python.exe "c:/AutoVimeoDownloader/main.py" -i names_urls.txt
 ```
 
 ## Acknowledgements
