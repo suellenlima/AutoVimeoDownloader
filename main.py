@@ -5,6 +5,7 @@ import os
 import re
 import requests
 import subprocess
+import urllib.parse
 from tqdm import tqdm
 
 parser = argparse.ArgumentParser()
@@ -20,6 +21,9 @@ for line in open(args.url_list):
     resp = requests.get(master_json_url)
     content = resp.json()
 
+    # Fix the base url
+    base_url = urllib.parse.urljoin(base_url, content['base_url'])
+    
     # Video download here
     heights = [(i, d['height']) for (i, d) in enumerate(content['video'])]
     idx = max(heights, key=lambda x: x[1])[0]
