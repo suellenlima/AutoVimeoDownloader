@@ -33,7 +33,7 @@ FFmpeg: https://ffmpeg.org/
   
   Install pip and tqdm module in python
 
-### Instructions to download video
+### Instructions to download video in main.py
 For each video you want to download:
 1. Open the page containing the embedded video.
 1. Open development console (Chrome: F12).
