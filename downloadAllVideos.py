@@ -224,6 +224,8 @@ for id in ids:
 
     # Delete the remaining single audio and video files
     os.remove("video.html")
+    os.remove(filenameAudio)
+    os.remove(filenameVideo)
     print("Temporary files removed!")
 
     # Log the conclusion of the operations
